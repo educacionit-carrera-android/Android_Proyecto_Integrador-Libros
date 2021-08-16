@@ -1,5 +1,6 @@
 package com.educacionit.libros;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -30,8 +31,15 @@ public class MainActivity extends AppCompatActivity {
         btnIniciarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Iniciar sesión presionado", Toast.LENGTH_SHORT).show();
-                // TODO agregar acción correspondiente
+                String usuario = etUsuario.getText().toString();
+                String contrasenia = etContrasenia.getText().toString();
+                if (usuario.isEmpty() || contrasenia.isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Completar datos", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                    intent.putExtra("USUARIO", usuario);
+                    startActivity(intent);
+                }
             }
         });
     }
