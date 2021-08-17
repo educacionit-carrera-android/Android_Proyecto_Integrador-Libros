@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText etUsuario;
     private EditText etContrasenia;
     private Button btnIniciarSesion;
+    private TextView txtTerminosYCondiciones;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         etUsuario = findViewById(R.id.etUsuario);
         etContrasenia = findViewById(R.id.etContraseña);
         btnIniciarSesion = findViewById(R.id.btnIniciarSesion);
+        txtTerminosYCondiciones = findViewById(R.id.txtTerminosYCondiciones);
 
         btnIniciarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +44,14 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
+            }
+        });
+        txtTerminosYCondiciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(
+                        new Intent(MainActivity.this, TermsAndConditionsActivity.class)
+                );
             }
         });
     }
