@@ -1,6 +1,7 @@
 package com.educacionit.libros;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,16 +13,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String USUARIO = "USUARIO";
     private EditText etUsuario;
     private EditText etContrasenia;
     private Button btnIniciarSesion;
     private TextView txtTerminosYCondiciones;
+    private SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        preferences = getPreferences(MODE_PRIVATE);
         setupUI();
     }
 
@@ -39,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
                 if (usuario.isEmpty() || contrasenia.isEmpty()) {
                     Toast.makeText(MainActivity.this, "Completar datos", Toast.LENGTH_SHORT).show();
                 } else {
+                    guardarSharedPref(usuario);
                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                     intent.putExtra("USUARIO", usuario);
                     startActivity(intent);
@@ -54,5 +59,18 @@ public class MainActivity extends AppCompatActivity {
                 );
             }
         });
+
+        cargarSharedPref();
+    }
+
+    private void cargarSharedPref() {
+        String usuario = preferences.getString(USUARIO, "");
+        etUsuario.setText(usuario);
+    }
+
+    private void guardarSharedPref(String usuario) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(USUARIO, usuario);
+        editor.apply();
     }
 }
