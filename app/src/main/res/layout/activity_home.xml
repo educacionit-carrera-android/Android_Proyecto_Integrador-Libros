@@ -16,4 +16,13 @@
         app:elevation="4dp"
         app:popupTheme="@style/Theme.MaterialComponents.Light" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvLibros"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="4"
+        tools:listitem="@layout/item_libro" />
+
 </LinearLayout>

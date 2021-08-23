@@ -9,10 +9,16 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
+    private RecyclerView rvLibros;
+    private LibrosAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +27,7 @@ public class HomeActivity extends AppCompatActivity {
 
         setupToolbar();
         saludarUsuario();
+        setupAdapter();
     }
 
     private void setupToolbar() {
@@ -47,6 +54,26 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(
                 new Intent(HomeActivity.this, AgregarLibroActivity.class)
         );
+    }
+
+    private void setupAdapter() {
+        rvLibros = findViewById(R.id.rvLibros);
+        adapter = new LibrosAdapter(new LibrosAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Libro libro) {
+                Toast.makeText(HomeActivity.this, libro.getNombre(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        rvLibros.setAdapter(adapter);
+        adapter.setLibros(getLibros());
+    }
+
+    private List<Libro> getLibros() {
+        return new ArrayList<Libro>() {{
+            add(new Libro(1, "Harry Potter", "J.K. Rowling"));
+            add(new Libro(2, "Game of Thrones", "George Martin"));
+            add(new Libro(3, "Maze Runner", "James Dashner"));
+        }};
     }
 
     private void saludarUsuario() {
