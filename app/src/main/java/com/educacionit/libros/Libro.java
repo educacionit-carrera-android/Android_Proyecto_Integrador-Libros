@@ -1,6 +1,8 @@
 package com.educacionit.libros;
 
-public class Libro {
+import java.io.Serializable;
+
+public class Libro implements Serializable {
 
     private Integer id;
     private String nombre;

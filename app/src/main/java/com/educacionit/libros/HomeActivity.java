@@ -1,11 +1,16 @@
 package com.educacionit.libros;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -16,9 +21,24 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
+    public static final String LIBRO = "Libro";
     private Toolbar toolbar;
     private RecyclerView rvLibros;
     private LibrosAdapter adapter;
+    private ActivityResultLauncher<Intent> startForResult = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Libro nuevoLibro = (Libro) result.getData().getSerializableExtra(LIBRO);
+                        if (nuevoLibro != null) {
+                            agregarNuevoLibroAdapter(nuevoLibro);
+                        }
+                    }
+                }
+            }
+    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +71,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void goToAgregarLibro() {
-        startActivity(
+        startForResult.launch(
                 new Intent(HomeActivity.this, AgregarLibroActivity.class)
         );
     }
@@ -74,6 +94,12 @@ public class HomeActivity extends AppCompatActivity {
             add(new Libro(2, "Game of Thrones", "George Martin"));
             add(new Libro(3, "Maze Runner", "James Dashner"));
         }};
+    }
+
+    private void agregarNuevoLibroAdapter(Libro nuevoLibro) {
+        List<Libro> libros = adapter.getLibros();
+        libros.add(nuevoLibro);
+        adapter.setLibros(libros);
     }
 
     private void saludarUsuario() {

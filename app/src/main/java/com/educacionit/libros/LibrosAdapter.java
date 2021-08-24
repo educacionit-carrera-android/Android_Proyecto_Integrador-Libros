@@ -67,4 +67,8 @@ public class LibrosAdapter extends
         this.libros = libros;
         notifyDataSetChanged();
     }
+
+    public List<Libro> getLibros() {
+        return this.libros;
+    }
 }
