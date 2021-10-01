@@ -1,61 +1,53 @@
-package com.educacionit.libros;
+package com.educacionit.libros
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 
-import androidx.appcompat.app.AppCompatActivity;
+class AgregarLibroActivity : AppCompatActivity() {
+    private lateinit var etNombreLibro: EditText
+    private lateinit var etAutor: EditText
+    private lateinit var btnGuardar: Button
 
-import static com.educacionit.libros.HomeActivity.LIBRO;
-
-public class AgregarLibroActivity extends AppCompatActivity {
-    private EditText etNombreLibro;
-    private EditText etAutor;
-    private Button btnGuardar;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_agregar_libro);
-
-        setupUI();
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_agregar_libro)
+        setupUI()
     }
 
-    private void setupUI() {
-        etNombreLibro = findViewById(R.id.etNombreLibro);
-        etAutor = findViewById(R.id.etAutor);
-        btnGuardar = findViewById(R.id.btnGuardar);
-        btnGuardar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                guardarLibro();
-            }
-        });
+    private fun setupUI() {
+        etNombreLibro = findViewById(R.id.etNombreLibro)
+        etAutor = findViewById(R.id.etAutor)
+        btnGuardar = findViewById(R.id.btnGuardar)
+        btnGuardar.setOnClickListener { guardarLibro() }
     }
 
-    private void guardarLibro() {
+    private fun guardarLibro() {
         if (datosValidos()) {
-            Libro libro = new Libro();
-            libro.setNombre(etNombreLibro.getText().toString());
-            libro.setAutor(etAutor.getText().toString());
+            val libro = Libro()
+            libro.nombre = etNombreLibro.text.toString()
+            libro.autor = etAutor.text.toString()
             setResult(
-                    Activity.RESULT_OK, new Intent().putExtra(LIBRO, libro)
-            );
-            finish();
+                RESULT_OK, Intent().putExtra(HomeActivity.LIBRO, libro)
+            )
+            finish()
         } else {
-            Toast.makeText(AgregarLibroActivity.this, "Completar todos los campos", Toast.LENGTH_SHORT).show();
+            Toast.makeText(
+                this@AgregarLibroActivity,
+                "Completar todos los campos",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
-    private boolean datosValidos() {
-        boolean datosValidos = true;
-        if (etNombreLibro.getText().toString().isEmpty() || etAutor.getText().toString().isEmpty()) {
-            datosValidos = false;
+    private fun datosValidos(): Boolean {
+        var datosValidos = true
+        if (etNombreLibro.text.toString().isEmpty() || etAutor.text.toString().isEmpty()) {
+            datosValidos = false
         }
-        return datosValidos;
+        return datosValidos
     }
 }
