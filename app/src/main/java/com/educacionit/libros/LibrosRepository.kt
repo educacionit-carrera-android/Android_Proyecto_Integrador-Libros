@@ -19,7 +19,7 @@ class LibrosRepository(context: Context) {
     }
 
 
-    fun getLibros(): List<Libro> {
+    suspend fun getLibros(): List<Libro> {
         return dao.queryForAll()
     }
 
