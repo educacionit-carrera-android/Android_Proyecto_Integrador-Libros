@@ -6,7 +6,12 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import com.educacionit.libros.network.RetrofitClient
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LibrosFavoritosActivity : AppCompatActivity() {
 
@@ -55,6 +60,22 @@ class LibrosFavoritosActivity : AppCompatActivity() {
     }
 
     private fun obtenerLibrosFavoritos() {
-        // TODO completar con llamado a la api
+        mostrarProgressBar()
+        lifecycleScope.launch(Dispatchers.IO) {
+            mostrarProgressBar()
+            try {
+                val libros = RetrofitClient.librosApi.getLibrosFavoritos().map { it.toLibro() }
+                withContext(Dispatchers.Main) {
+                    adapter.libros = libros
+                }
+            } catch (e: Exception) {
+                mostrarMensaje(e.message ?: "No se pudieron obtener los libros favoritos")
+                e.printStackTrace()
+            } finally {
+                withContext(Dispatchers.Main) {
+                    ocultarProgressBar()
+                }
+            }
+        }
     }
 }
