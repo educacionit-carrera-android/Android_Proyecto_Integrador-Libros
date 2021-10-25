@@ -54,8 +54,18 @@ class HomeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.item_agregar) {
             goToAgregarLibro()
+        } else if (item.itemId == R.id.item_favoritos) {
+            goToFavoritos()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun goToFavoritos() {
+        startActivity(
+            Intent(
+                this, LibrosFavoritosActivity::class.java
+            )
+        )
     }
 
     private fun goToAgregarLibro() {
