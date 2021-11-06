@@ -1,6 +1,10 @@
 package com.educacionit.libros
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +14,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 import androidx.fragment.app.Fragment
 import com.squareup.picasso.Picasso
 
@@ -54,6 +59,7 @@ class AgregarLibroFragment : Fragment() {
             libro.nombre = etNombreLibro.text.toString()
             libro.autor = etAutor.text.toString()
             guardarLibro(libro)
+            mostrarNotification()
             requireActivity().setResult(
                 AppCompatActivity.RESULT_OK, Intent().putExtra(HomeActivity.LIBRO, true)
             )
@@ -77,5 +83,30 @@ class AgregarLibroFragment : Fragment() {
             datosValidos = false
         }
         return datosValidos
+    }
+
+    private fun mostrarNotification() {
+        val notification = NotificationCompat.Builder(requireContext(), CHANNEL_ID)
+            .setSmallIcon(R.mipmap.ic_launcher_round)
+            .setContentTitle("Libros")
+            .setContentText("Se agregó un libro a la colección")
+            .build()
+
+        val notificationManager = requireContext().getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        crearCanal(notificationManager)
+        notificationManager.notify(1, notification)
+    }
+
+    private fun crearCanal(notificationManager: NotificationManager) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(CHANNEL_ID,
+                "Nuevo libro",
+                NotificationManager.IMPORTANCE_DEFAULT)
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private companion object {
+        const val CHANNEL_ID: String = "1"
     }
 }
