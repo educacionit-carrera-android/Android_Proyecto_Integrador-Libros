@@ -38,6 +38,7 @@ class HomeActivity : AppCompatActivity() {
         saludarUsuario()
         setupAdapter()
         refrescarLibros()
+        initializeSyncService()
     }
 
     private fun setupToolbar() {
@@ -86,6 +87,16 @@ class HomeActivity : AppCompatActivity() {
                 adapter.libros = libros
             }
         }
+    }
+
+    private fun initializeSyncService() {
+        val intent = Intent(this, SyncService::class.java)
+        startService(intent)
+    }
+
+    override fun onDestroy() {
+        stopService(Intent(this, SyncService::class.java))
+        super.onDestroy()
     }
 
     private fun saludarUsuario() {
