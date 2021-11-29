@@ -6,6 +6,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
+        apply from: "$project.rootDir/global-version-dependencies.gradle"
         classpath "com.android.tools.build:gradle:4.2.2"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
