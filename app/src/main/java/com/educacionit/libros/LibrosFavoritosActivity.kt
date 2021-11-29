@@ -69,7 +69,9 @@ class LibrosFavoritosActivity : AppCompatActivity() {
                     adapter.libros = libros
                 }
             } catch (e: Exception) {
-                mostrarMensaje(e.message ?: "No se pudieron obtener los libros favoritos")
+                withContext(Dispatchers.Main) {
+                    mostrarMensaje(e.message ?: "No se pudieron obtener los libros favoritos")
+                }
                 e.printStackTrace()
             } finally {
                 withContext(Dispatchers.Main) {

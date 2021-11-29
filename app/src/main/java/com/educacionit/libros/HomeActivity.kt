@@ -1,5 +1,8 @@
 package com.educacionit.libros
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_NO_CREATE
 import android.content.Intent
 import android.content.Intent.ACTION_AIRPLANE_MODE_CHANGED
 import android.content.IntentFilter
@@ -15,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Calendar
+
 
 class HomeActivity : AppCompatActivity() {
 
@@ -41,8 +46,8 @@ class HomeActivity : AppCompatActivity() {
         saludarUsuario()
         setupAdapter()
         refrescarLibros()
-        initializeSyncService()
         registerReceiver(airplaneStateReceiver, IntentFilter(ACTION_AIRPLANE_MODE_CHANGED));
+        createSyncAlarm()
     }
 
     private fun setupToolbar() {
@@ -93,9 +98,23 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun initializeSyncService() {
-        val intent = Intent(this, SyncService::class.java)
-        startService(intent)
+    private fun createSyncAlarm() {
+        val intent = Intent(this, SyncDataReceiver::class.java)
+        val alarmExists = PendingIntent.getBroadcast(this, 0, intent, FLAG_NO_CREATE) != null
+        if (!alarmExists) {
+            val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+            val pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
+            val calendar: Calendar = Calendar.getInstance()
+            calendar.timeInMillis = System.currentTimeMillis()
+            calendar.set(Calendar.HOUR_OF_DAY, 8)
+            calendar.set(Calendar.MINUTE, 0)
+            alarmManager.setInexactRepeating(
+                AlarmManager.RTC,
+                calendar.timeInMillis,
+                86400000,
+                pendingIntent
+            )
+        }
     }
 
     override fun onDestroy() {
