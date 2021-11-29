@@ -1,6 +1,8 @@
 package com.educacionit.libros
 
 import android.content.Intent
+import android.content.Intent.ACTION_AIRPLANE_MODE_CHANGED
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -29,6 +31,7 @@ class HomeActivity : AppCompatActivity() {
             if (libroAgregado) refrescarLibros()
         }
     }
+    private val airplaneStateReceiver = AirplaneStateReceiver()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +42,7 @@ class HomeActivity : AppCompatActivity() {
         setupAdapter()
         refrescarLibros()
         initializeSyncService()
+        registerReceiver(airplaneStateReceiver, IntentFilter(ACTION_AIRPLANE_MODE_CHANGED));
     }
 
     private fun setupToolbar() {
