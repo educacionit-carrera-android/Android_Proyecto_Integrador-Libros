@@ -10,6 +10,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText etUsuario;
     private EditText etContrasenia;
     private Button btnIniciarSesion;
+    private Button btnCrearUsuario;
+    private ConstraintLayout container;
     private TextView txtTerminosYCondiciones;
     private SharedPreferences preferences;
 
@@ -34,6 +39,15 @@ public class MainActivity extends AppCompatActivity {
         etContrasenia = findViewById(R.id.etContraseña);
         btnIniciarSesion = findViewById(R.id.btnIniciarSesion);
         txtTerminosYCondiciones = findViewById(R.id.txtTerminosYCondiciones);
+        btnCrearUsuario = findViewById(R.id.btnCrearUsuario);
+        container = findViewById(R.id.container);
+
+        btnCrearUsuario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mostrarInProgress();
+            }
+        });
 
         btnIniciarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +75,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         cargarSharedPref();
+    }
+
+    private void mostrarInProgress() {
+        Snackbar.make(container, "En progreso", Snackbar.LENGTH_LONG).show();
     }
 
     private void cargarSharedPref() {
