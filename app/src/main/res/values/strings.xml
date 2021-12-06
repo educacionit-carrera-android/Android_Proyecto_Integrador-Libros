@@ -6,4 +6,9 @@
     <string name="about_me_text">Este es el Proyecto Integrador de la Carrera de Android realizada en el instituto Educación IT.\nEs una aplicación que permite tener un registro de libros conteniendo el nombre del mismo y el autor.</string>
     <string name="logo_educacion_it">Logo educacion it</string>
     <string name="placeholder_libro">Placeholder libro</string>
+
+    <string name="acerca_de">Acerca de</string>
+    <string name="cerrar_sesion">Cerrar sesión</string>
+    <string name="open">Abrir</string>
+    <string name="close">Cerrar</string>
 </resources>

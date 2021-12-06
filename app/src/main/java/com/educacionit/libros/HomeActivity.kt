@@ -11,20 +11,25 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Calendar
 
-
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var toolbar: Toolbar
     private lateinit var rvLibros: RecyclerView
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navigationView: NavigationView
+
     private var adapter: LibrosAdapter = LibrosAdapter {
         goToDetalleLibro(it)
     }
@@ -43,6 +48,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         setupToolbar()
+        configurarNavigationView()
         saludarUsuario()
         setupAdapter()
         refrescarLibros()
@@ -54,6 +60,24 @@ class HomeActivity : AppCompatActivity() {
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.title = "Mis Libros"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun configurarNavigationView() {
+        drawerLayout = findViewById(R.id.drawerLayout)
+        val drawerToggle =
+            ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close)
+        drawerLayout.addDrawerListener(drawerToggle)
+        drawerToggle.syncState()
+        navigationView = findViewById(R.id.navigationView)
+        navigationView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menuAboutMe -> goToAboutMe()
+                R.id.menuCerrarSesion -> cerrarSesion()
+            }
+            drawerLayout.closeDrawers()
+            true
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -92,6 +116,12 @@ class HomeActivity : AppCompatActivity() {
 
     private fun goToAboutMe() {
         startActivity(Intent(this, AboutMeActivity::class.java))
+    }
+
+    private fun cerrarSesion() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun setupAdapter() {
