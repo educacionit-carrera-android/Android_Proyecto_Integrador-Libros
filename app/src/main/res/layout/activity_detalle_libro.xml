@@ -17,6 +17,12 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:title="Detalle del libro" />
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:contentDescription="@string/placeholder_libro"
+        app:srcCompat="@drawable/placeholder_libro" />
+
     <TextView
         android:id="@+id/textView4"
         android:layout_width="match_parent"
