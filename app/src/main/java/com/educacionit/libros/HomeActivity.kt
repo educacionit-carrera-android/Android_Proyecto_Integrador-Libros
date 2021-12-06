@@ -26,7 +26,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var toolbar: Toolbar
     private lateinit var rvLibros: RecyclerView
     private var adapter: LibrosAdapter = LibrosAdapter {
-        Toast.makeText(this@HomeActivity, it.nombre, Toast.LENGTH_SHORT).show()
+        goToDetalleLibro(it)
     }
     private val startForResult = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -82,6 +82,16 @@ class HomeActivity : AppCompatActivity() {
         startForResult.launch(
             Intent(this@HomeActivity, AgregarLibroActivity::class.java)
         )
+    }
+
+    private fun goToDetalleLibro(libro: Libro) {
+        val intent = Intent(this, DetalleLibroActivity::class.java)
+        intent.putExtra(LIBRO, libro)
+        startActivity(intent)
+    }
+
+    private fun goToAboutMe() {
+        startActivity(Intent(this, AboutMeActivity::class.java))
     }
 
     private fun setupAdapter() {

@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Libros</string>
     <string name="terminos_y_condiciones">Términos y condiciones</string>
+    <string name="author">Autor</string>
+    <string name="book">Libro</string>
+    <string name="about_me_text">Este es el Proyecto Integrador de la Carrera de Android realizada en el instituto Educación IT.\nEs una aplicación que permite tener un registro de libros conteniendo el nombre del mismo y el autor.</string>
+    <string name="logo_educacion_it">Logo educacion it</string>
 </resources>

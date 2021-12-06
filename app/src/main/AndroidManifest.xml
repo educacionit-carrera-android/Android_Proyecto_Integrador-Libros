@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.educacionit.libros" >
+    package="com.educacionit.libros">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -11,7 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Libros"
-        android:usesCleartextTraffic="true" >
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".DetalleLibroActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AboutMeActivity"
+            android:exported="false" />
         <activity
             android:name=".LibrosFavoritosActivity"
             android:exported="false" />
@@ -19,7 +25,7 @@
         <activity android:name=".TermsAndConditionsActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".SplashScreenActivity" >
+        <activity android:name=".SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,10 +44,9 @@
                 <action android:name="android.intent.action.AIRPLANE_MODE" />
             </intent-filter>
         </receiver>
-
         <receiver
             android:name=".SyncDataReceiver"
-            android:exported="false"/>
+            android:exported="false" />
     </application>
 
 </manifest>
