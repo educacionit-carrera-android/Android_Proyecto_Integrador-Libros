@@ -17,6 +17,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,6 +30,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var rvLibros: RecyclerView
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
+    private lateinit var fabAgregarLibro: FloatingActionButton
 
     private var adapter: LibrosAdapter = LibrosAdapter {
         goToDetalleLibro(it)
@@ -49,6 +51,7 @@ class HomeActivity : AppCompatActivity() {
 
         setupToolbar()
         configurarNavigationView()
+        configurarFAB()
         saludarUsuario()
         setupAdapter()
         refrescarLibros()
@@ -80,15 +83,18 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    private fun configurarFAB() {
+        fabAgregarLibro = findViewById(R.id.fabAgregarLibro)
+        fabAgregarLibro.setOnClickListener { goToAgregarLibro() }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_home, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.item_agregar) {
-            goToAgregarLibro()
-        } else if (item.itemId == R.id.item_favoritos) {
+        if (item.itemId == R.id.item_favoritos) {
             goToFavoritos()
         }
         return super.onOptionsItemSelected(item)
