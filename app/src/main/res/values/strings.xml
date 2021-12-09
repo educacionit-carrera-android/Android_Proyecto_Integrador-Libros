@@ -11,4 +11,7 @@
     <string name="cerrar_sesion">Cerrar sesión</string>
     <string name="open">Abrir</string>
     <string name="close">Cerrar</string>
+
+    <string name="nombre_autor">nombre_autor</string>
+    <string name="nombre_libro">nombre_libro</string>
 </resources>

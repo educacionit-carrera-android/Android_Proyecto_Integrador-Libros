@@ -38,7 +38,11 @@ public class LibrosAdapter extends
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClickListener.onItemClick(libros.get(position));
+                onItemClickListener.onItemClick(
+                        libros.get(position),
+                        holder.txtNombre,
+                        holder.txtAutor
+                );
             }
         });
     }
@@ -60,7 +64,7 @@ public class LibrosAdapter extends
     }
 
     interface OnItemClickListener {
-        void onItemClick(Libro libro);
+        void onItemClick(Libro libro, TextView txtNombreLibro, TextView txtAutor);
     }
 
     public void setLibros(List<Libro> libros) {

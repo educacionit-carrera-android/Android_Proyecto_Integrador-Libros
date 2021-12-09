@@ -18,8 +18,8 @@ class LibrosFavoritosActivity : AppCompatActivity() {
     private lateinit var toolbar: Toolbar
     private lateinit var progressBar: ProgressBar
     private lateinit var rvLibrosFavoritos: RecyclerView
-    private var adapter: LibrosAdapter = LibrosAdapter {
-        mostrarMensaje(it.nombre)
+    private var adapter: LibrosAdapter = LibrosAdapter { libro, _, _ ->
+        mostrarMensaje(libro.nombre)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

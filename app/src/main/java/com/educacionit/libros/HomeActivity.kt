@@ -9,11 +9,15 @@ import android.content.IntentFilter
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
@@ -32,8 +36,12 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var navigationView: NavigationView
     private lateinit var fabAgregarLibro: FloatingActionButton
 
-    private var adapter: LibrosAdapter = LibrosAdapter {
-        goToDetalleLibro(it)
+    private var adapter: LibrosAdapter = LibrosAdapter { libro, txtNombreLibro, txtAutor ->
+        goToDetalleLibro(
+            libro,
+            txtNombreLibro,
+            txtAutor
+        )
     }
     private val startForResult = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -114,10 +122,19 @@ class HomeActivity : AppCompatActivity() {
         )
     }
 
-    private fun goToDetalleLibro(libro: Libro) {
+    private fun goToDetalleLibro(libro: Libro, txtNombre: TextView, txtAutor: TextView) {
         val intent = Intent(this, DetalleLibroActivity::class.java)
         intent.putExtra(LIBRO, libro)
-        startActivity(intent)
+
+        val pair1: Pair<View, String> = Pair.create(txtNombre, getString(R.string.nombre_libro))
+        val pair2: Pair<View, String> = Pair.create(txtAutor, getString(R.string.nombre_autor))
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+            this,
+            pair1,
+            pair2,
+        )
+
+        startActivity(intent, options.toBundle());
     }
 
     private fun goToAboutMe() {
