@@ -122,6 +122,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun goToAboutMe() {
         startActivity(Intent(this, AboutMeActivity::class.java))
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
 
     private fun cerrarSesion() {
