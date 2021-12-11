@@ -14,4 +14,5 @@
 
     <string name="nombre_autor">nombre_autor</string>
     <string name="nombre_libro">nombre_libro</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>

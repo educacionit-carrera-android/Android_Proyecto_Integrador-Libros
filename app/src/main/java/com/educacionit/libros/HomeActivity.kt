@@ -104,6 +104,8 @@ class HomeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.item_favoritos) {
             goToFavoritos()
+        } else if (item.itemId == R.id.item_mapa) {
+            goToMapa()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -140,6 +142,10 @@ class HomeActivity : AppCompatActivity() {
     private fun goToAboutMe() {
         startActivity(Intent(this, AboutMeActivity::class.java))
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+    }
+
+    private fun goToMapa() {
+        startActivity(Intent(this, MapsActivity::class.java))
     }
 
     private fun cerrarSesion() {
