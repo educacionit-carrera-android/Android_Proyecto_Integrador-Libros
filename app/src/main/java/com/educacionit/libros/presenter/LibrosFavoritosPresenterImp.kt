@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 class LibrosFavoritosPresenterImp(
-    private val librosFavoritosView: LibrosFavoritosView,
+    private var librosFavoritosView: LibrosFavoritosView?,
     private val librosRepository: ILibrosRepository,
     private val uiContext: CoroutineContext = Dispatchers.Main
 ) : LibrosFavoritosPresenter, CoroutineScope {
@@ -22,22 +22,27 @@ class LibrosFavoritosPresenterImp(
         get() = uiContext + job
 
     override fun doGetLibrosFavoritos() {
-        librosFavoritosView.mostrarProgressBar()
+        librosFavoritosView?.mostrarProgressBar()
         launch(Dispatchers.IO) {
             librosRepository.getLibrosFavoritos(
                 {
                     launch(Dispatchers.Main) {
-                        librosFavoritosView.actualizarLibros(it)
-                        librosFavoritosView.ocultarProgressBar()
+                        librosFavoritosView?.actualizarLibros(it)
+                        librosFavoritosView?.ocultarProgressBar()
                     }
                 },
                 {
                     launch(Dispatchers.Main) {
-                        librosFavoritosView.mostrarMensaje(it)
-                        librosFavoritosView.ocultarProgressBar()
+                        librosFavoritosView?.mostrarMensaje(it)
+                        librosFavoritosView?.ocultarProgressBar()
                     }
                 },
             )
         }
+    }
+
+    override fun cleanPresenter() {
+        job.cancel()
+        librosFavoritosView = null
     }
 }

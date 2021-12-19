@@ -72,4 +72,9 @@ class LibrosFavoritosActivity : AppCompatActivity(), LibrosFavoritosView {
     override fun actualizarLibros(libros: List<Libro>) {
         adapter.libros = libros
     }
+
+    override fun onDestroy() {
+        presenter.cleanPresenter()
+        super.onDestroy()
+    }
 }
