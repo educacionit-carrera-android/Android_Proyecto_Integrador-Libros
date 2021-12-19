@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private ConstraintLayout container;
     private TextView txtTerminosYCondiciones;
     private SharedPreferences preferences;
+    private UserFieldsValidation userValidation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         preferences = getPreferences(MODE_PRIVATE);
+        userValidation = new UserFieldsValidation();
         setupUI();
     }
 
@@ -54,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String usuario = etUsuario.getText().toString();
                 String contrasenia = etContrasenia.getText().toString();
-                if (usuario.isEmpty() || contrasenia.isEmpty()) {
+                if (userValidation.isUserValid(usuario, contrasenia)) {
                     Toast.makeText(MainActivity.this, "Completar datos", Toast.LENGTH_SHORT).show();
                 } else {
                     guardarSharedPref(usuario);
