@@ -63,7 +63,7 @@ public class LibrosAdapter extends
         }
     }
 
-    interface OnItemClickListener {
+    public interface OnItemClickListener {
         void onItemClick(Libro libro, TextView txtNombreLibro, TextView txtAutor);
     }
 

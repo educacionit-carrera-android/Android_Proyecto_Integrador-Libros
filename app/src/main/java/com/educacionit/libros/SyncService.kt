@@ -4,6 +4,8 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import android.util.Log
+import com.educacionit.libros.io.LibrosRepository
+import com.educacionit.libros.io.network.RetrofitClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -12,7 +14,12 @@ import kotlinx.coroutines.launch
 class SyncService : Service() {
 
     private lateinit var job: Job
-    private val librosRepository: LibrosRepository by lazy { LibrosRepository(applicationContext) }
+    private val librosRepository: LibrosRepository by lazy {
+        LibrosRepository(
+            applicationContext,
+            RetrofitClient.librosApi,
+        )
+    }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Log.i("SyncService", "Servicio iniciado")

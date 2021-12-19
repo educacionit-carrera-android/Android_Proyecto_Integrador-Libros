@@ -1,4 +1,4 @@
-package com.educacionit.libros.network
+package com.educacionit.libros.io.network
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import retrofit2.Retrofit

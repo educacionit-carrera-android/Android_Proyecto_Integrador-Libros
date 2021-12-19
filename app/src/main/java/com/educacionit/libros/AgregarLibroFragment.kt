@@ -16,6 +16,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.fragment.app.Fragment
+import com.educacionit.libros.io.LibrosRepository
+import com.educacionit.libros.io.network.RetrofitClient
 import com.squareup.picasso.Picasso
 
 class AgregarLibroFragment : Fragment() {
@@ -74,7 +76,10 @@ class AgregarLibroFragment : Fragment() {
     }
 
     private fun guardarLibro(libro: Libro) {
-        LibrosRepository(requireContext()).agregarLibro(libro)
+        LibrosRepository(
+            requireContext(),
+            RetrofitClient.librosApi,
+        ).agregarLibro(libro)
     }
 
     private fun datosValidos(): Boolean {

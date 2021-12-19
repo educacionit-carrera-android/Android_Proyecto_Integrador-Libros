@@ -31,7 +31,7 @@
             android:name=".AboutMeActivity"
             android:exported="false" />
         <activity
-            android:name=".LibrosFavoritosActivity"
+            android:name=".view.LibrosFavoritosActivity"
             android:exported="false" />
         <activity android:name=".AgregarLibroActivity" />
         <activity android:name=".TermsAndConditionsActivity" />

@@ -21,6 +21,9 @@ import androidx.core.util.Pair
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import com.educacionit.libros.io.LibrosRepository
+import com.educacionit.libros.io.network.RetrofitClient
+import com.educacionit.libros.view.LibrosFavoritosActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.Dispatchers
@@ -161,7 +164,10 @@ class HomeActivity : AppCompatActivity() {
 
     private fun refrescarLibros() {
         lifecycleScope.launch(Dispatchers.IO) {
-            val libros = LibrosRepository(this@HomeActivity).getLibros()
+            val libros = LibrosRepository(
+                this@HomeActivity,
+                RetrofitClient.librosApi,
+            ).getLibros()
             withContext(Dispatchers.Main) {
                 adapter.libros = libros
             }

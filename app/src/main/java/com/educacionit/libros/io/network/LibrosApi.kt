@@ -1,4 +1,4 @@
-package com.educacionit.libros.network
+package com.educacionit.libros.io.network
 
 import com.educacionit.libros.LibroResponse
 import retrofit2.http.GET
