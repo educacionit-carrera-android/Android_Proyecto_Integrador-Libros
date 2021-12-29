@@ -57,13 +57,13 @@ public class MainActivity extends AppCompatActivity {
                 String usuario = etUsuario.getText().toString();
                 String contrasenia = etContrasenia.getText().toString();
                 if (userValidation.isUserValid(usuario, contrasenia)) {
-                    Toast.makeText(MainActivity.this, "Completar datos", Toast.LENGTH_SHORT).show();
-                } else {
                     guardarSharedPref(usuario);
                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                     intent.putExtra("USUARIO", usuario);
                     startActivity(intent);
                     finish();
+                } else {
+                    Toast.makeText(MainActivity.this, "Completar datos", Toast.LENGTH_SHORT).show();
                 }
             }
         });
